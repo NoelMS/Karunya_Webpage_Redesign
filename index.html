@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Overview</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header>
+<h1>
+<a href="newpg.htm" class="logo-link">Robotics Engineering</a>
+</h1>
+<nav>
+<ul>
+<li><a href="index.html">Overview</a></li>
+<li><a href="academics.html">Academics</a></li>
+<li><a href="faculty.html">Faculty</a></li>
+<li class="has-submenu" id="research-menu">
+<a href="research.html">Research</a>
+<ul class="submenu">
+<li><a href="publications.html">Publications</a></li>
+<li><a href="projects.html">Projects</a></li>
+</ul>
+</li>
+<li><a href="testimonials.html">Testimonials</a></li>
+</ul>
+</nav>
+<button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>
+</header>
+<section class="section">
+<h2>Robotics Engineering @ Karunya</h2>
+<p>The growth of robotics has been tremendously high in the recent years and the next few years are to witness stupendous advancements in robotic technology especially with the advent of Industry 4.0. Consequent to this paradigm shift in technology, Undergraduate and Postgraduate courses in Robotics & Automation has become one of the top most career choices among the aspirants. Robotics and Automation is an interdisciplinary branch which amalgamates various fields of Engineering that include Mechanical, Electronics, Computer Science, Sensors and Instrumentation, Industrial Automation, Artificial Intelligence and Machine learning, Nanotechnology, Bio Engineering, Machine Vision and many more. This course enriches the takers with knowledge related to design, construction, operation, and applications of robots as well as the techniques of industrial automation
+Started in 2018 at KITS, B.Tech - Robotics and Automation has rapidly gained momentum owing to the increasing demand for robotics and automation engineers . The department houses several state-of-the-art labs which aim to inculcate the urge for research and innovation. The curriculum at Karunya is thoughtfully curated for current industry requirement based on inputs from veterans in the relevant domains belonging to academia and industry. It equips the students in par with the industry standards and fosters an innovative attitude that leads them to become entrepreneurs. The department also has robust tie-ups with various industries and is currently collaborating with many more in order to provide a platform for the students to be exposed to latest trends in the field of robotics and automation.</p>
+</section>
+<section class="section">
+<h2>Our Vision</h2>
+<p>To raise engineers and researchers with technical expertise in Robotics and Automation engineering to meet the needs of industry and society.</p>
+</section>
+<section class="section">
+<h2>Our Mission</h2>
+<p>To equip the students with adequate knowledge and skills in the field of robotics and automation. To instil in the students, a quest for technological research and innovation towards finding solutions to human problems. To nurture leadership skills with ethical values to make lasting contributions to science, technology, and society.</p>
+</section>
+<footer style="background-color: var(--header-bg);">
+© 2025 Karunya Institute of Technology and Sciences — Robotics Engineering Department
+</footer>
+<script>
+const storedTheme=localStorage.getItem('theme');
+if(storedTheme==='light')document.body.classList.add('light');
+function toggleTheme(){
+const light=document.body.classList.toggle('light');
+localStorage.setItem('theme',light?'light':'dark');
+}
+function revealOnScroll(){
+const elements=document.querySelectorAll('.section');
+const windowBottom=window.innerHeight+window.scrollY;
+elements.forEach(el=>{
+const elTop=el.getBoundingClientRect().top+window.scrollY;
+if(windowBottom>elTop+100){
+el.classList.add('visible');
+}
+});
+}
+window.addEventListener('scroll',revealOnScroll);
+window.addEventListener('load',revealOnScroll);
+document.addEventListener('DOMContentLoaded',()=>{
+const submenuItems=document.querySelectorAll('nav li.has-submenu');
+submenuItems.forEach(item=>{
+let hideTimeout;
+item.addEventListener('mouseenter',()=>{
+clearTimeout(hideTimeout);
+item.classList.add('force-show');
+});
+item.addEventListener('mouseleave',()=>{
+hideTimeout=setTimeout(()=>{
+item.classList.remove('force-show');
+},1000);
+});
+});
+document.querySelectorAll('nav li.has-submenu > a').forEach(menuLink=>{
+menuLink.addEventListener('click',function(e){
+const isMobile=window.matchMedia("(max-width: 600px)").matches;
+if(isMobile){
+e.preventDefault();
+const parentLi=this.parentElement;
+parentLi.classList.toggle('open');
+}
+});
+});
+document.addEventListener('click',function(e){
+const isMobile=window.matchMedia("(max-width: 600px)").matches;
+if(!isMobile)return;
+submenuItems.forEach(li=>{
+if(!li.contains(e.target)){
+li.classList.remove('open');
+}
+});
+});
+window.addEventListener('resize',()=>{
+if(window.innerWidth>600){
+submenuItems.forEach(item=>item.classList.remove('open'));
+}
+});
+});
+</script>
+</body>
+</html>

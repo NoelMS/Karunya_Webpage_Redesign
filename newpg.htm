@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Department of Robotics Engineering</title>
+<style>
+:root {
+--bg-color: #121212;
+--text-color: #f5f5f5;
+--header-bg: #1f1f1f;
+--accent: #b59758;}
+body.light {
+--bg-color: #ffffff;
+--text-color: #121212;
+--header-bg: #eeeeee;}
+body {
+margin: 0;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background-color: var(--bg-color);
+color: var(--text-color);
+scroll-behavior: smooth;
+position: relative;
+min-height: 100vh;
+overflow-x: hidden;}
+
+body::before {
+content: "";
+position: fixed;
+top: 50%;
+left: 50%;
+width: 600px;
+height: 600px;
+background: url('8809f25dcae32a7d2fb96931b848c093.png') no-repeat center center;
+background-size: contain;
+opacity: 0.1;
+transform: translate(-50%, -50%);
+pointer-events: none;
+z-index: 0;
+user-select: none;
+}
+
+header, footer {
+background-color: var(--header-bg);
+color: var(--text-color);
+transition: background-color 0.3s, color 0.3s;
+position: relative;
+z-index: 10;
+}
+
+header {
+padding: 1em 2em;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+header h1 {
+margin: 0;
+font-size: 1.8em;
+font-weight: 700;
+letter-spacing: 1.5px;
+}
+
+nav ul {
+list-style: none;
+margin: 0;
+padding: 0;
+display: flex;
+gap: 1em;
+}
+
+nav li {
+position: relative;
+}
+
+nav a {
+text-decoration: none;
+color: var(--text-color);
+transition: color 0.3s, transform 0.2s ease-in-out;
+font-weight: 600;
+letter-spacing: 0.8px;
+padding: 0.3em 0.4em;
+border-radius: 3px;
+user-select: none;
+}
+
+nav a:hover,
+nav a:focus {
+color: var(--accent);
+transform: translateY(-2px);
+background-color: rgba(181, 151, 88, 0.15);
+}
+
+nav li.has-submenu > a::after {
+content: " \25BC";
+font-size: 0.6em;
+margin-left: 4px;
+}
+
+nav ul ul {
+display: none;
+position: absolute;
+top: 100%;
+left: 0;
+background-color: var(--header-bg);
+padding: 0.5em 1em;
+border-radius: 5px;
+box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+z-index: 20;
+min-width: 150px;
+}
+
+nav ul ul li {
+margin: 0.3em 0;
+}
+
+nav ul ul a {
+padding: 0.4em 0.6em;
+font-weight: 500;
+display: block;
+}
+
+@media (min-width: 601px) {
+nav li.has-submenu:hover > ul,
+nav li.has-submenu:focus-within > ul {
+display: block;
+}
+}
+
+@media (max-width: 600px) {
+nav ul {
+flex-direction: column;
+gap: 0;
+}
+
+nav ul ul {
+position: static;
+box-shadow: none;
+border-radius: 0;
+padding-left: 1em;
+}
+
+nav li.has-submenu > ul {
+display: none;
+}
+
+nav li.has-submenu.open > ul {
+display: block;
+}
+}
+
+.toggle-theme {
+background: none;
+color: var(--text-color);
+border: 1.5px solid var(--text-color);
+padding: 0.6em 1em;
+cursor: pointer;
+font-weight: 600;
+border-radius: 5px;
+transition: background-color 0.3s, color 0.3s;
+user-select: none;
+}
+
+.toggle-theme:hover {
+background-color: var(--accent);
+color: var(--header-bg);
+border-color: var(--accent);
+}
+
+.section {
+padding: 3em 2em;
+opacity: 0;
+transform: translateY(40px);
+transition: all 0.8s ease-out;
+max-width: 900px;
+margin: 0 auto 3em;
+line-height: 1.6;
+font-size: 1.15em;
+text-align: left;
+position: relative;
+z-index: 1;
+}
+
+.section h2 {
+font-size: 2.2em;
+font-weight: 700;
+margin-bottom: 0.6em;
+letter-spacing: 1.2px;
+color: var(--accent);
+text-align: left;
+text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+.section.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+.carousel {
+width: 1920px;
+max-width: 100%;
+height: 530px;
+overflow: hidden;
+position: relative;
+margin: 0 auto 3em;
+border-radius: 12px;
+z-index: 1;
+box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+background: #000;
+border-bottom: none;
+}
+
+body.light .carousel {
+background: #fff;
+box-shadow: none;
+border-bottom: 3px solid var(--accent);
+}
+
+.carousel img {
+width: 100%;
+height: 530px;
+position: absolute;
+top: 0;
+left: 0;
+opacity: 0;
+transition: opacity 1s ease-in-out;
+object-fit: contain;
+user-select: none;
+border-radius: 12px;
+background: #000;
+}
+
+body.light .carousel img {
+background: #fff;
+}
+
+.carousel img.active {
+opacity: 1;
+position: relative;
+}
+
+.carousel img:last-child {
+object-fit: cover;
+}
+
+.carousel-controls {
+position: absolute;
+top: 50%;
+width: 100%;
+display: flex;
+justify-content: space-between;
+transform: translateY(-50%);
+padding: 0 2em;
+pointer-events: none;
+box-sizing: border-box;
+z-index: 5;
+}
+
+.carousel-controls button {
+pointer-events: auto;
+background-color: rgba(0, 0, 0, 0.6);
+color: white;
+border: none;
+padding: 0.6em 1em;
+cursor: pointer;
+font-size: 1.4em;
+border-radius: 5px;
+user-select: none;
+transition: background-color 0.3s ease;
+}
+
+.carousel-controls button:hover {
+background-color: var(--accent);
+color: var(--header-bg);
+}
+
+body.light .carousel-controls button {
+background-color: rgba(0,0,0,0.3);
+color: var(--text-color);
+}
+
+body.light .carousel-controls button:hover {
+background-color: var(--accent);
+color: var(--header-bg);
+}
+
+.cards {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 2.5em;
+padding: 2em 1em 4em;
+max-width: 500px;
+margin: 0 auto;
+position: relative;
+z-index: 1;
+}
+
+.card {
+background: var(--header-bg);
+color: var(--text-color);
+border-radius: 15px;
+padding: 2.2em 2.5em;
+width: 100%;
+box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+opacity: 0;
+transform: translateY(30px);
+transition: opacity 0.8s ease, transform 0.8s ease;
+font-size: 1.2em;
+line-height: 1.5;
+font-weight: 600;
+text-align: center;
+letter-spacing: 0.03em;
+user-select: none;
+border: 1.5px solid rgba(181, 151, 88, 0.3);
+box-sizing: border-box;
+text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.card.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+.testimonials blockquote {
+border-left: 4px solid var(--accent);
+margin: 1em 0;
+padding-left: 1em;
+font-style: italic;
+}
+
+footer {
+text-align: center;
+padding: 1em;
+font-size: 0.9em;
+color: var(--accent);
+font-weight: 500;
+position: relative;
+z-index: 1;
+}
+
+@media (max-width: 600px) {
+nav ul {
+flex-direction: column;
+}
+
+nav ul ul {
+position: static;
+}
+
+.cards {
+width: 90%;
+}
+
+.card {
+padding: 1.8em 1.5em;
+font-size: 1.05em;
+}
+
+header {
+padding: 1em;
+}
+
+.section {
+padding: 2em 1em;
+font-size: 1em;
+}
+}
+</style>
+</head>
+<body class="dark">
+<header>
+<h1><a href="index.html" style="color: inherit; text-decoration: none;">Robotics Engineering</a></h1>
+<nav>
+<ul>
+<li><a href="index.html">Overview</a></li>
+<li><a href="academics.html">Academics</a></li>
+<li><a href="faculty.html">Faculty</a></li>
+<li class="has-submenu" tabindex="0">
+<a href="#">Research</a>
+<ul>
+<li><a href="publications.html">Publications</a></li>
+<li><a href="projects.html">Projects</a></li>
+</ul>
+</li>
+<li><a href="testimonials.html">Testimonials</a></li>
+</ul>
+</nav>
+<button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>
+</header>
+
+<div class="carousel">
+<img src="department-of-robotics-jpg.pagespeed.ce.L2zURsVbN6.jpg" alt="Robotics" class="active" />
+<img src="adaf.jpg" alt="Robotics Lab" />
+<img src="66df897f758bc2fa1fa3e29a_hero.webp" alt="Robotics Tech" />
+<img src="roboticsdepts.jpg" alt="Robotics Department" />
+<img src="LastImage.jpg" alt="Final Image" />
+<div class="carousel-controls">
+<button id="prevBtn" aria-label="Previous image">&#10094;</button>
+<button id="nextBtn" aria-label="Next image">&#10095;</button>
+</div>
+</div>
+
+<section class="section">
+<h2>About Us</h2>
+<p>
+The Department of Robotics Engineering at Karunya Institute of Technology and Sciences offers cutting-edge education and research in robotics, AI, and automation.<br><br>
+Started in 2018 at KITS, B.Tech - Robotics and Automation has rapidly gained momentum owing to the increasing demand for robotics and automation engineers. The department houses several state-of-the-art labs which aim to inculcate the urge for research and innovation. The curriculum at Karunya is thoughtfully curated for current industry requirement based on inputs from veterans in the relevant domains belonging to academia and industry. It equips the students in par with the industry standards and fosters an innovative attitude that leads them to become entrepreneurs. The department also has robust tie-ups with various industries and is currently collaborating with many more in order to provide a platform for the students to be exposed to latest trends in the field of robotics and automation.
+</p>
+</section>
+
+<section class="cards">
+<div class="card">Robotics Lab with latest equipment</div>
+<div class="card">Experienced Faculty and Researchers</div>
+<div class="card">Collaborative Research Projects</div>
+</section>
+<section class="section testimonials">
+<h2>Testimonials</h2>
+<blockquote>
+"I am Samyuktha S, an alumna of Karunya University in Robotics and Automation (2022). Currently, I work as a research engineer at Hyundai Mobis R&D. Choosing robotics in 2018 was a challenging decision, but Karunya’s curriculum and practical learning approach played a crucial role in shaping my academic journey. They provided unwavering support and abundant opportunities for growth, including involvement in organizations like IAESTE and IEEE, and founding CAIRA. Karunya has been pivotal in nurturing my potential and facilitating personal growth, making my college years profoundly rewarding. Here’s to Karunya University and its community!"
+<br>
+<br>
+- SAMYUKTHA S
+</blockquote>
+<blockquote>
+"Karunya has opened the door to enhance my skills in AI and robotics, which helped me secure a 9.76 CGPA in M.Tech Robotics and Automation. This paved the way for me to get placed in the field of ADAS at one of the leading French car manufacturers, Renault. Currently, I am working as an ADAS Engineer at Renault Nissan Technology and Business Centre India, Chennai. The blend of academic excellence and practical experience has been instrumental in shaping my career and providing me with the skills needed to excel in this field."
+<br>
+<br>
+- LAKSHMANAPRAKASH S B
+</blockquote>
+</section>
+<footer>
+© 2025 Karunya Institute of Technology and Sciences — Robotics Engineering Department
+</footer>
+<script>
+function toggleTheme() {
+document.body.classList.toggle('light');
+}
+const images = document.querySelectorAll('.carousel img');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+let currentIndex = 0;
+function showImage(index) {
+images.forEach((img, i) => {
+img.classList.toggle('active', i === index);
+});
+}
+prevBtn.addEventListener('click', () => {
+currentIndex = (currentIndex - 1 + images.length) % images.length;
+showImage(currentIndex);
+});
+nextBtn.addEventListener('click', () => {
+currentIndex = (currentIndex + 1) % images.length;
+showImage(currentIndex);
+});
+function revealOnScroll() {
+const revealElements = document.querySelectorAll('.section, .card');
+const windowBottom = window.innerHeight + window.scrollY;
+revealElements.forEach(el => {
+const elementTop = el.getBoundingClientRect().top + window.scrollY;
+if (windowBottom > elementTop + 100) {
+el.classList.add('visible');
+}
+});
+}
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+document.querySelectorAll('nav li.has-submenu > a').forEach(menuLink => {
+menuLink.addEventListener('click', function (e) {
+const isMobile = window.matchMedia("(max-width: 600px)").matches;
+if (isMobile) {
+e.preventDefault();
+const parentLi = this.parentElement;
+parentLi.classList.toggle('open');
+}
+});
+});
+document.addEventListener('click', function(e) {
+const isMobile = window.matchMedia("(max-width: 600px)").matches;
+if (!isMobile) return;
+const submenuParents = document.querySelectorAll('nav li.has-submenu');
+submenuParents.forEach(li => {
+if (!li.contains(e.target)) {
+li.classList.remove('open');
+}
+});
+});
+</script>
+</body>
+</html>

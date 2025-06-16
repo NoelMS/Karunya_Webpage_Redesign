@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Publications</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+.publications-container {
+display: flex;
+padding: 2em;
+gap: 2em;
+}
+.year-list {
+width: 220px;
+background-color: var(--header-bg);
+padding: 1em;
+border-radius: 10px;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+.year-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0.5em 1em;
+cursor: pointer;
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+color: var(--text-color);
+transition: background 0.2s;
+}
+.year-item:hover {
+background-color: rgba(181, 151, 88, 0.1);
+}
+.year-item span.arrow {
+font-size: 0.9em;
+color: var(--accent);
+}
+.publication-content {
+flex-grow: 1;
+padding: 1em;
+background-color: var(--header-bg);
+border-radius: 10px;
+color: var(--text-color);
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+max-height: 600px;
+overflow-y: auto;
+}
+h2.page-title {
+color: var(--accent);
+text-align: left;
+padding: 1em 2em 0 2em;
+font-size: 2em;
+}
+.publication-entry {
+margin-bottom: 1.5em;
+}
+.publication-entry h4 {
+margin: 0.2em 0;
+color: var(--accent);
+}
+.publication-entry p {
+margin: 0.1em 0;
+}
+</style>
+</head>
+<body>
+<header>
+<h1><a href="newpg.htm" class="logo-link">Robotics Engineering</a></h1>
+<nav>
+<ul>
+<li><a href="index.html">Overview</a></li>
+<li><a href="academics.html">Academics</a></li>
+<li><a href="faculty.html">Faculty</a></li>
+<li class="has-submenu" id="research-menu">
+<a href="research.html">Research</a>
+<ul class="submenu">
+<li><a href="publications.html">Publications</a></li>
+<li><a href="projects.html">Projects</a></li>
+</ul>
+</li>
+<li><a href="testimonials.html">Testimonials</a></li>
+</ul>
+</nav>
+<button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>
+</header>
+<h2 class="page-title">Publications</h2>
+<div class="publications-container">
+<div class="year-list">
+<div class="year-item" onclick="loadPublications('2022-2023')">2022 - 2023 <span class="arrow">▶</span></div>
+<div class="year-item" onclick="loadPublications('2021-2022')">2021 - 2022 <span class="arrow">▶</span></div>
+<div class="year-item" onclick="loadPublications('2020-2021')">2020 - 2021 <span class="arrow">▶</span></div>
+<div class="year-item" onclick="loadPublications('2019-2020')">2019 - 2020 <span class="arrow">▶</span></div>
+<div class="year-item" onclick="loadPublications('2018-2019')">2018 - 2019 <span class="arrow">▶</span></div>
+<div class="year-item" onclick="loadPublications('2017-2018')">2017 - 2018 <span class="arrow">▶</span></div>
+<div class="year-item" onclick="loadPublications('2016-2017')">2016 - 2017 <span class="arrow">▶</span></div>
+<div class="year-item" onclick="loadPublications('2015-2016')">2015 - 2016 <span class="arrow">▶</span></div>
+<div class="year-item" onclick="loadPublications('2014-2015')">2014 - 2015 <span class="arrow">▶</span></div>
+<div class="year-item" onclick="loadPublications('2013-2014')">2013 - 2014 <span class="arrow">▶</span></div>
+<div class="year-item" onclick="loadPublications('2012-2013')">2012 - 2013 <span class="arrow">▶</span></div>
+</div>
+<div class="publication-content" id="publication-content">
+<p>Select a year to view publications.</p>
+</div>
+</div>
+<footer style="background-color: var(--header-bg);">
+© 2025 Karunya Institute of Technology and Sciences — Robotics Engineering Department
+</footer>
+<script>
+const storedTheme = localStorage.getItem('theme');
+if (storedTheme === 'light') document.body.classList.add('light');
+function toggleTheme() {
+const light = document.body.classList.toggle('light');
+localStorage.setItem('theme', light ? 'light' : 'dark');
+}
+function loadPublications(year) {
+const pubContent = document.getElementById('publication-content');
+const data = {
+'2022-2023': [
+{
+title: 'Semiconductor Materials for Solar PV Technology and Challenges towards Electrical Engineering',
+authors: 'M. Siva Ramkumar, R. Felshiya Rajakumari, Nithiyananthan Kannan, R. Premkumar, S. Mohanasundaram, S. Purushotham, D. Ramya, and Kavitha Rajan',
+journal: 'Journal on Advances in Materials Science and Engineering, 7272489, 2022'
+},
+{
+title: 'Title of Research Paper 2',
+authors: 'Dr. Subathra et al.',
+journal: 'IEEE Transactions on Automation'
+}
+],
+'2021-2022': [],
+};
+if (!data[year] || data[year].length === 0) {
+pubContent.innerHTML = `<p>No publications listed for ${year}.</p>`;
+return;
+}
+pubContent.innerHTML = data[year].map(pub => `
+<div class="publication-entry">
+<h4>${pub.title}</h4>
+<p><strong>Authors:</strong> ${pub.authors}</p>
+<p><strong>Journal:</strong> ${pub.journal}</p>
+</div>
+`).join('');
+}
+</script>
+</body>
+</html>
