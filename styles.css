@@ -27,6 +27,7 @@ body {
 }
 
 body::before {
+<<<<<<< HEAD
   content: "";
   position: fixed;
   top: 0;
@@ -57,6 +58,36 @@ body::after {
   transform: translate(-50%, -50%);
 }
 
+=======
+content: "";
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+background: url('1582624734phpxXv1TJ.jpeg') no-repeat center center;
+background-size: cover;
+opacity: 0.1;
+pointer-events: none;
+z-index: 0;
+user-select: none;
+}
+body::after {
+content: "";
+position: fixed;
+top: 50%;
+left: 50%;
+width: 250px; 
+height: 250px; 
+background: url('8809f25dcae32a7d2fb96931b848c093.png') no-repeat center center;
+background-size: contain;
+opacity: 0.11;
+pointer-events: none;
+z-index: -2;
+user-select: none;
+transform: translate(-50%, -50%);
+}
+>>>>>>> 6dc0346adfcc7ca50507d6f729cb69737113c58d
 header {
   background-color: var(--header-bg);
   color: var(--text-color);
